@@ -6,4 +6,7 @@
   left: 0;
   top: calc(100% + 10px);
   margin: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
 }
