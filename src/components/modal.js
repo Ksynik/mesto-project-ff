@@ -44,4 +44,4 @@ function setupModal(modal) {
       closeModal(modal);
     }
   });
-}
+};
