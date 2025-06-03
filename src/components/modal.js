@@ -11,7 +11,10 @@ const handleEscKeyUp = (e) => {
 
 export const openModal = (modal) => {
   if (!modal.classList.contains('popup_is-opened')) {
-    modal.classList.add('popup_is-opened');
+    modal.classList.add('popup_is-animated'); 
+    setTimeout(() => {
+      modal.classList.add('popup_is-opened'); 
+    }, 10); 
     openModalsCount++;
     if (openModalsCount === 1) {
       document.addEventListener('keydown', handleEscKeyUp);
@@ -20,12 +23,13 @@ export const openModal = (modal) => {
 };
 
 export const closeModal = (modal) => {
-  if (modal.classList.contains('popup_is-opened')) {
-    modal.classList.remove('popup_is-opened');
-    openModalsCount = Math.max(0, openModalsCount - 1);
-    if (openModalsCount === 0) {
-      document.removeEventListener('keydown', handleEscKeyUp);
-    }
+  modal.classList.remove('popup_is-opened'); 
+  setTimeout(() => {
+    modal.classList.remove('popup_is-animated'); 
+  }, 300); 
+  openModalsCount = Math.max(0, openModalsCount - 1);
+  if (openModalsCount === 0) {
+    document.removeEventListener('keydown', handleEscKeyUp);
   }
 };
 
@@ -44,4 +48,4 @@ function setupModal(modal) {
       closeModal(modal);
     }
   });
-};
+}
