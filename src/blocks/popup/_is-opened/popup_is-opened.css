@@ -5,3 +5,7 @@
   pointer-events: all;
   transition: visibility 0s, opacity 0.6s;
 }
+.popup_is-opened .popup__caption {
+  visibility: visible;
+  opacity: 1;
+}

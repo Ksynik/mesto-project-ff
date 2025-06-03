@@ -46,7 +46,10 @@ function handleAddCardFormSubmit(evt) {
     if (!name || !link) return;
 
     const cardData = { name, link };
-    const card = createCard(cardData, handleDelete, handleCardImageClick);
+    const card = createCard(cardData, {
+        handleDelete,
+        handleImageClick: handleCardImageClick
+    });
 
     if (card) {
         places.prepend(card);
@@ -58,12 +61,15 @@ function handleAddCardFormSubmit(evt) {
 function handleCardImageClick(cardData) {
     popupImage.src = cardData.link;
     popupImage.alt = cardData.name;
-    popupCaption.textContent = cardData.name;
+    popupCaption.textContent = cardData.name; 
     openModal(imagePopup);
 }
 
 function renderCard(cardData, insertMethod = "prepend") {
-    const cardElement = createCard(cardData, handleDelete, handleCardImageClick);
+    const cardElement = createCard(cardData, {
+        handleDelete,
+        handleImageClick: handleCardImageClick
+    });
     if (typeof places[insertMethod] === "function") {
         places[insertMethod](cardElement);
     } else {
