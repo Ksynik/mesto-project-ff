@@ -2,7 +2,7 @@ import '../pages/index.css';
 import { openModal, closeModal, setModalListeners } from '../components/modal.js';
 import { createCard, handleDelete } from '../components/card.js';
 import { enableValidation, clearValidation } from '../validation.js';
-import { getUserInfo, addCard, updateAvatar, getInitialCards } from '../api.js';
+import { getUserInfo, addCard, updateAvatar, getInitialCards, addLike, removeLike } from '../api.js';
 
 // DOM-элементы
 const places = document.querySelector('.places__list');
@@ -68,6 +68,21 @@ function handleCardImageClick({ name, link }) {
   openModal(imagePopup);
 }
 
+function handleLike({ cardId, likeButton, likeCountElement }) {
+  const liked = likeButton.classList.contains("card__like-button_is-active");
+  const apiMethod = liked ? removeLike : addLike;
+  apiMethod(cardId)
+    .then(updatedCard => {
+      likeCountElement.textContent = updatedCard.likes.length;
+      if (updatedCard.likes.some(user => user._id === userId)) {
+        likeButton.classList.add("card__like-button_is-active");
+      } else {
+        likeButton.classList.remove("card__like-button_is-active");
+      }
+    })
+    .catch(console.error);
+}
+
 // --- Обработчики форм ---
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
@@ -99,6 +114,7 @@ function handleAddCardFormSubmit(evt) {
       const card = createCard(cardData, {
         handleDelete,
         handleImageClick: handleCardImageClick,
+        handleLike, 
         userId
       });
       places.prepend(card);
@@ -176,6 +192,7 @@ function renderCards(cards) {
     const card = createCard(cardData, {
       handleDelete,
       handleImageClick: handleCardImageClick,
+      handleLike, // ← обязательно передайте эту функцию!
       userId
     });
     places.append(card);

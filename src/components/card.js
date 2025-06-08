@@ -3,7 +3,7 @@ import { addLike, removeLike, deleteCard } from '../api.js';
 const cardTemplate = document.querySelector("#card-template").content;
 
 export function createCard({ name, link, likes, owner, _id }, 
-{ handleDelete, handleImageClick, userId }) {
+{ handleDelete, handleImageClick, handleLike, userId }) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
@@ -12,7 +12,6 @@ export function createCard({ name, link, likes, owner, _id },
   const likeCountElement = cardElement.querySelector('.card__like-count');
   const cardId = _id; 
 
-  cardImage.onclick = null;
     if (deleteButton) deleteButton.onclick = null;
     if (likeButton) likeButton.onclick = null;
 
@@ -41,18 +40,7 @@ export function createCard({ name, link, likes, owner, _id },
   likeCountElement.textContent = likes.length;
 
   likeButton.addEventListener("click", () => {
-    const liked = likeButton.classList.contains("card__like-button_is-active");
-    const apiMethod = liked ? removeLike : addLike;
-    apiMethod(cardId)
-      .then(updatedCard => {
-        likeCountElement.textContent = updatedCard.likes.length;
-        if (updatedCard.likes.some(user => user._id === userId)) {
-          likeButton.classList.add("card__like-button_is-active");
-        } else {
-          likeButton.classList.remove("card__like-button_is-active");
-        }
-      })
-      .catch(console.error);
+    handleLike({ cardId: _id, likeButton, likeCountElement });
   });
 
   return cardElement;
