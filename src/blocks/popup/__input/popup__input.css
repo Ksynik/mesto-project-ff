@@ -20,3 +20,17 @@
     line-height: 15px;
   }
 }
+
+.popup__input-error {
+  color: #f00; 
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.popup__input-error_active {
+  opacity: 1;
+}
+.popup__input_type_error {
+  border-bottom: 1px solid #f00;
+}

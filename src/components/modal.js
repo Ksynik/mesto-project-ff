@@ -49,3 +49,5 @@ function setupModal(modal) {
     }
   });
 }
+
+const avatarPopup = document.querySelector('.popup_type_new-avatar');

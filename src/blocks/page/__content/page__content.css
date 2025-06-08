@@ -6,3 +6,12 @@
   display: flex;
   flex-direction: column;
 }
+
+
+@media screen and (max-width: 480px) {
+  .profile__avatar-edit {
+    width: 18px;
+    height: 18px;
+    background-size: 8px 8px;
+  }
+}
